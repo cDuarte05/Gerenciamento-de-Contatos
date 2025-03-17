@@ -7,9 +7,9 @@ public class ArvoreBinariaBusca {
         this.raiz = null;
     }
 
-    public void inserir(int valorNovo) {
+    public void inserir(int cod, String nome, long tell) {
         if (estaVazia()) {
-            raiz = new No(valorNovo);
+            raiz = new No(cod, nome, tell);
             return;
         }
 
@@ -19,9 +19,9 @@ public class ArvoreBinariaBusca {
         // Percorre a árvore até encontrar a posição de inserção
         while (atual != null) {
             pai = atual;
-            if (valorNovo < atual.valor) {
+            if (cod < atual.cod) {
                 atual = atual.esquerdo;
-            } else if (valorNovo > atual.valor) {
+            } else if (cod > atual.cod) {
                 atual = atual.direito;
             } else {
                 return; // Valor já existe, ignora
@@ -29,8 +29,8 @@ public class ArvoreBinariaBusca {
         }
 
         // Após encontrar a posição (atual == null), insere o novo nó
-        No novoNo = new No(valorNovo);
-        if (valorNovo < pai.valor) {
+        No novoNo = new No(cod, nome, tell);
+        if (cod < pai.cod) {
             pai.esquerdo = novoNo;
         } else {
             pai.direito = novoNo;
@@ -40,9 +40,9 @@ public class ArvoreBinariaBusca {
     public No buscar(int valorBuscado) {
         No atual = raiz;
         while (atual != null) {
-            if (valorBuscado == atual.valor)
+            if (valorBuscado == atual.cod)
                 return atual;
-            else if (valorBuscado < atual.valor)
+            else if (valorBuscado < atual.cod)
                 atual = atual.esquerdo;
             else
                 atual = atual.direito;
@@ -64,9 +64,9 @@ public class ArvoreBinariaBusca {
         No pai = null;
 
         // Encontrar o nó a ser removido e seu pai
-        while (atual != null && atual.valor != valorRemover) {
+        while (atual != null && atual.cod != valorRemover) {
             pai = atual;
-            if (valorRemover < atual.valor) {
+            if (valorRemover < atual.cod) {
                 atual = atual.esquerdo;
             } else {
                 atual = atual.direito;
@@ -110,7 +110,7 @@ public class ArvoreBinariaBusca {
             }
 
             // Copiar o valor do sucessor para o nó atual
-            atual.valor = sucessor.valor;
+            atual.cod = sucessor.cod;
 
             // Remover o sucessor (que tem no máximo um filho direito)
             if (paiSucessor == atual) {
@@ -169,10 +169,10 @@ public class ArvoreBinariaBusca {
         if (atual == null) {
             return -1;
         }
-        if (atual.valor == valor) {
+        if (atual.cod == valor) {
             return profundidade;
         }
-        if (valor < atual.valor) {
+        if (valor < atual.cod) {
             return calcularProfundidadeRecursivo(atual.esquerdo, valor, profundidade + 1);
         }
         return calcularProfundidadeRecursivo(atual.direito, valor, profundidade + 1);
@@ -193,7 +193,7 @@ public class ArvoreBinariaBusca {
 
     private void imprimirPreOrdemRecursivo(No atual, StringBuilder sb) {
         if (atual != null) {
-            sb.append(atual.valor).append(", ");
+            sb.append(atual.cod).append(", ");
             imprimirPreOrdemRecursivo(atual.esquerdo, sb);
             imprimirPreOrdemRecursivo(atual.direito, sb);
         }
@@ -216,7 +216,7 @@ public class ArvoreBinariaBusca {
         if (atual != null) {
             imprimirPosOrdemRecursivo(atual.esquerdo, sb);
             imprimirPosOrdemRecursivo(atual.direito, sb);
-            sb.append(atual.valor).append(", ");
+            sb.append(atual.cod).append(", ");
         }
     }
 
@@ -236,7 +236,7 @@ public class ArvoreBinariaBusca {
     private void imprimirInOrdemRecursivo(No atual, StringBuilder sb) {
         if (atual != null) {
             imprimirInOrdemRecursivo(atual.esquerdo, sb);
-            sb.append(atual.valor).append(", ");
+            sb.append(atual.cod).append(", ");
             imprimirInOrdemRecursivo(atual.direito, sb);
         }
     }
@@ -260,7 +260,7 @@ public class ArvoreBinariaBusca {
         for (int i = 4; i < espaco; i++) {
             System.out.print(" ");
         }
-        System.out.print(atual.valor + "\n");
+        System.out.print(atual.cod + "\n");
 
         imprimirArvoreTextoRecursivo(atual.esquerdo, espaco);
 
