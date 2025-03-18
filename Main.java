@@ -6,7 +6,6 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		ArvoreBinariaBusca contatos = new ArvoreBinariaBusca();
 		int opc = 0;
-
 		do {
 			System.out.println("Bem vindo ao nosso gerenciador de contatos");
 			System.out.println("Escolha a opção desejada: ");
@@ -35,7 +34,6 @@ public class Main {
 					int cod = sc.nextInt();	
 					if(contatos.existe(cod)) {
 						System.out.println("Código já existe. Escolha outra opção ou digite novamente");
-						break;
 					}else{
 						contatos.inserir(cod, nome, tell);
 						break;
