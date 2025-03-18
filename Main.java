@@ -18,7 +18,20 @@ public class Main {
 
 		do {
 			switch(opc){
-				case 1:
+				case 1: 
+					System.out.println("Digite o novo contato");
+					System.out.print("Nome: ");
+					String nome = sc.nextLine();
+					System.out.println("\nDigite o telefone (xxxxxxxxx): ");
+					long tell = sc.nextLong();
+					System.out.println("\nDigite o código do " + nome);
+					int cod = sc.nextInt();	
+					if(contatos.existe(cod)) {
+						System.out.println("Código já existe. Escolha outra opção ou digite novamente");
+						break;
+					}else{
+						contatos.inserir(cod, nome, tell);
+					}
 				break;
 				case 2:
 				break;
@@ -30,11 +43,13 @@ public class Main {
 				break;
 				case 6:
 				break;
+				case 7:
+				break;
 				default:
 				break;
 			}
 			
-		}while(opc != 6);
+		}while(opc != 7);
 		
 		sc.close();
 
