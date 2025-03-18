@@ -128,13 +128,31 @@ public class ArvoreBinariaBusca {
     public int contarNos() {
         return contarNosRecursivo(raiz);
     }
-
+ 
     private int contarNosRecursivo(No atual) {
         if (atual == null) {
             return 0;
         }
         return 1 + contarNosRecursivo(atual.esquerdo) + contarNosRecursivo(atual.direito);
     }
+
+    private int contador;
+    
+    public int contarFolhas(){
+        contador = 0;
+        contarQuantitadeFolhas(raiz);
+        return contador;
+    } 
+    private void contarQuantitadeFolhas(No atual){
+            if(atual == null){
+                contador++;
+                return;
+            }
+            contarQuantitadeFolhas(atual.esquerdo);
+            contarQuantitadeFolhas(atual.direito);
+
+    }
+    
 
     public int calcularAlturaArvore() {
         return calcularAlturaRecursivo(raiz);
@@ -148,6 +166,8 @@ public class ArvoreBinariaBusca {
         int alturaDireita = calcularAlturaRecursivo(atual.direito);
         return 1 + Math.max(alturaEsquerda, alturaDireita);
     }
+
+
 
     public int calcularAlturaNo(int valor) {
         No no = buscar(valor);

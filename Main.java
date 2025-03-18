@@ -87,6 +87,17 @@ public class Main {
 				case 5:
 				break;
 				case 6:
+					System.out.println("Estátisticas da árvore");
+					int numeroNos = 0;
+					int alturaArvore = 0;
+					int quantidadeFolhas = 0;
+					
+					numeroNos = contatos.contarNos();
+					alturaArvore = contatos.calcularAlturaArvore();
+					quantidadeFolhas = contatos.contarNos();
+					System.out.println("Nuúmero de nós: " + numeroNos);
+					System.out.println("Altura da árvore: "+ alturaArvore);
+					System.out.println("Quantidade de folhas: "+ quantidadeFolhas);
 				break;
 				case 7:
 					System.out.println("Finalizando...");
