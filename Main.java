@@ -34,10 +34,30 @@ public class Main {
 					}
 				break;
 				case 2:
+					System.out.println("Por favor, insíra o código do contato que quer encontrar:\n > ");
+					cod = 0;
+					try {
+						cod = sc.nextInt();				
+					} catch (Exception e) {
+						sc.next().charAt(0);
+						System.out.println("Código inválido, por favor, use uma entrada válida.\nExcessão: " + e);
+						break;
+					}
+					contatos.buscar(cod);
 				break;
 				case 3:
 				break;
 				case 4:
+					System.out.println("Por favor, insíra o código do contato que quer remover:\n > ");
+					cod = 0;
+					try {
+						cod = sc.nextInt();				
+					} catch (Exception e) {
+						sc.next().charAt(0);
+						System.out.println("Código inválido, por favor, use uma entrada válida.\nExcessão: " + e);
+						break;
+					}
+					contatos.buscar(cod);
 				break;
 				case 5:
 				break;
