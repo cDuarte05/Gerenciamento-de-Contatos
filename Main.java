@@ -5,30 +5,41 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		ArvoreBinariaBusca contatos = new ArvoreBinariaBusca();
-		
-		System.out.println("Bem vindo ao nosso gerenciador de contatos");
-		System.out.println("Escolha a opção desejada");
-		int opc = sc.nextInt();
-	    try {
-			opc = sc.nextInt();				
-		} catch (Exception e) {
-			sc.next().charAt(0);
-			System.out.println("Carácter inválido, por favor, use um número.\nExcessão: " + e);
-		}
-
+		int opc = 0;
+		long tell = 0;
+		int cod = 0;
 		do {
+			System.out.println("Bem vindo ao nosso gerenciador de contatos");
+			System.out.println("Escolha a opção desejada");
+			try {
+				opc = sc.nextInt();		
+			} catch (Exception e) {
+				sc.next().charAt(0);
+				System.out.println("Carácter inválido, por favor, use um número.\nExcessão: " + e);
+			}
 			switch(opc){
 				case 1: 
-					System.out.println("Digite o novo contato");
+					System.out.println("Digite o nome do novo contato:");
 					System.out.print("Nome: ");
+					sc.nextLine();
 					String nome = sc.nextLine();
 					System.out.println("\nDigite o telefone (xxxxxxxxx): ");
-					long tell = sc.nextLong();
-					System.out.println("\nDigite o código do " + nome);
-					int cod = sc.nextInt();	
+					try {
+						tell = sc.nextLong();	
+					} catch (Exception e) {
+						sc.next().charAt(0);
+						System.out.println("Carácter inválido, por favor, use um número.\nExcessão: " + e);
+					}
+					System.out.println("Digite o código do " + nome);
+					try {
+						cod = sc.nextInt();		
+					} catch (Exception e) {
+						sc.next().charAt(0);
+						System.out.println("Carácter inválido, por favor, use um número.\nExcessão: " + e);
+					}
+					
 					if(contatos.existe(cod)) {
 						System.out.println("Código já existe. Escolha outra opção ou digite novamente");
-						break;
 					}else{
 						contatos.inserir(cod, nome, tell);
 					}
