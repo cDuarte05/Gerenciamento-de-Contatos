@@ -61,7 +61,14 @@ public class Main {
 						System.out.println("Código inválido, por favor, use uma entrada válida.\nExcessão: " + e);
 						break;
 					}
-					contatos.buscar(cod);
+					No buscado = contatos.buscar(cod);
+					if (buscado == null) {
+						System.out.println("Código não presente na árvore de contatos.");
+					} else {
+						System.out.println("Nome: " + buscado.nome);
+						System.out.println("Telefone: " + buscado.tell);
+						System.out.println("Código: " + buscado.cod);
+					}
 				break;
 				case 3:
 				break;
@@ -75,7 +82,7 @@ public class Main {
 						System.out.println("Código inválido, por favor, use uma entrada válida.\nExcessão: " + e);
 						break;
 					}
-					contatos.buscar(cod);
+					contatos.remover(cod);
 				break;
 				case 5:
 				break;
