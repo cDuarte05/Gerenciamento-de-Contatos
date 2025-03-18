@@ -21,20 +21,42 @@ public class Main {
 				case 1:
 				break;
 				case 2:
+					System.out.println("Por favor, insíra o código do contato que quer encontrar:\n > ");
+					int cod = 0;
+					try {
+						cod = sc.nextInt();				
+					} catch (Exception e) {
+						sc.next().charAt(0);
+						System.out.println("Código inválido, por favor, use uma entrada válida.\nExcessão: " + e);
+						break;
+					}
+					contatos.buscar(cod);
 				break;
 				case 3:
 				break;
 				case 4:
+					System.out.println("Por favor, insíra o código do contato que quer remover:\n > ");
+					cod = 0;
+					try {
+						cod = sc.nextInt();				
+					} catch (Exception e) {
+						sc.next().charAt(0);
+						System.out.println("Código inválido, por favor, use uma entrada válida.\nExcessão: " + e);
+						break;
+					}
+					contatos.buscar(cod);
 				break;
 				case 5:
 				break;
 				case 6:
 				break;
+				case 7:
+				break;
 				default:
 				break;
 			}
 			
-		}while(opc != 6);
+		}while(opc != 7);
 		
 		sc.close();
 
