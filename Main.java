@@ -7,6 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		ArvoreBinariaBusca contatos = new ArvoreBinariaBusca();
+		ArvoreBinariaBusca nomes = new ArvoreBinariaBusca();
 		int opc = 0;
 		long tell = 0;
 		int cod = 0;
@@ -51,6 +52,7 @@ public class Main {
 						System.out.println("Código já existe. Escolha outra opção ou digite novamente");
 					}else{
 						contatos.inserir(cod, nome, tell);
+						nomes.inserirTexto(nome);
 					}
 				break;
 				case 2:
@@ -73,6 +75,7 @@ public class Main {
 					}
 				break;
 				case 3:
+					System.out.println(nomes.imprimirInOrdemNomes());
 				break;
 				case 4:
 					System.out.println("Por favor, insíra o código do contato que quer remover:\n > ");
@@ -84,10 +87,13 @@ public class Main {
 						System.out.println("Código inválido, por favor, use uma entrada válida.\nExcessão: " + e);
 						break;
 					}
+					buscado = contatos.buscar(cod);
+					nomes.removerTexto(buscado.nome);
 					contatos.remover(cod);
 				break;
 				case 5:
-				contatos.importarCSV("C:\\Users\\e2379\\Downloads\\ides\\ws-vsStudio\\Gerenciamento-de-Contatos\\contatos.csv");
+				contatos.importarCSV("contatos.csv");
+				nomes.importarCSVNomes("contatos.csv");
 				break;
 				case 6:
 					System.out.println("Estátisticas da árvore");
