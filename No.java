@@ -13,4 +13,8 @@ public class No {
 		this.esquerdo = null;
 		this.direito = null;
 	}
+
+	public No (String nome) {
+		this.nome = nome;
+	}
 }

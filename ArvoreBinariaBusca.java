@@ -41,6 +41,36 @@ public class ArvoreBinariaBusca {
         }
     }
 
+    public void inserirTexto (String nome) {
+        if (estaVazia()) {
+            raiz = new No(nome);
+            return;
+        }
+
+        No atual = raiz;
+        No pai = null;
+
+        // Percorre a árvore até encontrar a posição de inserção
+        while (atual != null) {
+            pai = atual;
+            if (nome.compareToIgnoreCase(atual.nome) < 0) {
+                atual = atual.esquerdo;
+            } else if (nome.compareToIgnoreCase(atual.nome) > 0) {
+                atual = atual.direito;
+            } else {
+                return; // Valor já existe, ignora
+            }
+        }
+
+        // Após encontrar a posição (atual == null), insere o novo nó
+        No novoNo = new No(nome);
+        if (nome.compareToIgnoreCase(pai.nome) < 0) {
+            pai.esquerdo = novoNo;
+        } else {
+            pai.direito = novoNo;
+        }
+    }
+
     public No buscar(int valorBuscado) {
         No atual = raiz;
         while (atual != null) {
@@ -71,6 +101,73 @@ public class ArvoreBinariaBusca {
         while (atual != null && atual.cod != valorRemover) {
             pai = atual;
             if (valorRemover < atual.cod) {
+                atual = atual.esquerdo;
+            } else {
+                atual = atual.direito;
+            }
+        }
+
+        // Se o nó não foi encontrado, retorna
+        if (atual == null) {
+            return;
+        }
+
+        // Caso 1 e 2: Nó sem filhos ou com apenas um filho
+        if (atual.esquerdo == null || atual.direito == null) {
+            No filho;
+            if (atual.esquerdo != null) {
+                filho = atual.esquerdo;
+            } else {
+                filho = atual.direito;
+            }
+            // Se o nó a ser removido é a raiz
+            if (pai == null) {
+                raiz = filho;
+            } else {
+                // Conecta o pai ao filho do nó removido
+                if (atual == pai.esquerdo) {
+                    pai.esquerdo = filho;
+                } else {
+                    pai.direito = filho;
+                }
+            }
+        }
+        // Caso 3: Nó com dois filhos
+        else {
+            // Encontrar o sucessor (menor valor da subárvore direita)
+            No paiSucessor = atual;
+            No sucessor = atual.direito;
+            
+            while (sucessor.esquerdo != null) {
+                paiSucessor = sucessor;
+                sucessor = sucessor.esquerdo;
+            }
+
+            // Copiar o valor do sucessor para o nó atual
+            atual.cod = sucessor.cod;
+
+            // Remover o sucessor (que tem no máximo um filho direito)
+            if (paiSucessor == atual) {
+                paiSucessor.direito = sucessor.direito;
+            } else {
+                paiSucessor.esquerdo = sucessor.direito;
+            }
+        }
+    }
+
+    public void removerTexto(String nomeRemover) {
+
+        if (estaVazia()) {
+            return;
+        }
+
+        No atual = raiz;
+        No pai = null;
+
+        // Encontrar o nó a ser removido e seu pai
+        while (atual != null && atual.nome != nomeRemover) {
+            pai = atual;
+            if (nomeRemover.compareToIgnoreCase(atual.nome) < 0) {
                 atual = atual.esquerdo;
             } else {
                 atual = atual.direito;
@@ -266,6 +363,27 @@ public class ArvoreBinariaBusca {
         }
     }
 
+    public String imprimirInOrdemNomes() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        
+        imprimirInOrdemRecursivoNomes(raiz, sb);
+        
+        if (sb.length() > 1) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    private void imprimirInOrdemRecursivoNomes(No atual, StringBuilder sb) {
+        if (atual != null) {
+            imprimirInOrdemRecursivoNomes(atual.esquerdo, sb);
+            sb.append(atual.nome).append(", ");
+            imprimirInOrdemRecursivoNomes(atual.direito, sb);
+        }
+    }
+
     public void imprimirArvoreTexto() {
         if (estaVazia()) {
             System.out.println("Árvore vazia");
@@ -291,7 +409,7 @@ public class ArvoreBinariaBusca {
 
     }
 
-    //CSV
+    //CSV árvore contatos
     public void importarCSV(String caminhoArquivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
             String linha;
@@ -315,4 +433,27 @@ public class ArvoreBinariaBusca {
         }
     }
 
+    //CSV arvore nomes
+    public void importarCSVNomes (String caminhoArquivo) {
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            String linha;
+            br.readLine(); // Pula o cabeçalho do CSV
+    
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
+                if (dados.length == 3) {
+                    Integer.parseInt(dados[0].trim());
+                    String nome = dados[1].trim();
+                    Long.parseLong(dados[2].trim());
+                    inserirTexto(nome);
+                }
+            }
+    
+            System.out.println("Importação concluída com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Erro ao converter os dados do arquivo: " + e.getMessage());
+        }
+    }
 }
