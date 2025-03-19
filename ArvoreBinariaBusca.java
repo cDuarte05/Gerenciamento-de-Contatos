@@ -140,7 +140,7 @@ public class ArvoreBinariaBusca {
         return 1 + contarNosRecursivo(atual.esquerdo) + contarNosRecursivo(atual.direito);
     }
 
-    private int contador;
+    int contador;
     
     public int contarFolhas(){
         contador = 0;
@@ -148,13 +148,14 @@ public class ArvoreBinariaBusca {
         return contador;
     } 
     private void contarQuantitadeFolhas(No atual){
-            if(atual == null){
-                contador++;
-                return;
-            }
-            contarQuantitadeFolhas(atual.esquerdo);
-            contarQuantitadeFolhas(atual.direito);
-
+        if(atual == null){
+            return;
+        }
+        contarQuantitadeFolhas(atual.esquerdo);               
+        contarQuantitadeFolhas(atual.direito);
+        if(atual.esquerdo == null && atual.direito == null){
+            contador++;
+        }
     }
     
 
