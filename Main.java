@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class Main {
+	
+	
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -85,6 +87,7 @@ public class Main {
 					contatos.remover(cod);
 				break;
 				case 5:
+				contatos.importarCSV("C:\\Users\\e2379\\Downloads\\ides\\ws-vsStudio\\Gerenciamento-de-Contatos\\contatos.csv");
 				break;
 				case 6:
 					System.out.println("Estátisticas da árvore");
@@ -94,7 +97,7 @@ public class Main {
 					
 					numeroNos = contatos.contarNos();
 					alturaArvore = contatos.calcularAlturaArvore();
-					quantidadeFolhas = contatos.contarNos();
+					quantidadeFolhas = contatos.contarFolhas();
 					System.out.println("Nuúmero de nós: " + numeroNos);
 					System.out.println("Altura da árvore: "+ alturaArvore);
 					System.out.println("Quantidade de folhas: "+ quantidadeFolhas);

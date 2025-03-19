@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class ArvoreBinariaBusca {
 
     private static final int ESPACO_IMPRESSAO = 4;
@@ -284,6 +288,30 @@ public class ArvoreBinariaBusca {
 
         imprimirArvoreTextoRecursivo(atual.esquerdo, espaco);
 
+    }
+
+    //CSV
+    public void importarCSV(String caminhoArquivo) {
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            String linha;
+            br.readLine(); // Pula o cabeçalho do CSV
+    
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
+                if (dados.length == 3) {
+                    int cod = Integer.parseInt(dados[0].trim());
+                    String nome = dados[1].trim();
+                    long tell = Long.parseLong(dados[2].trim());
+                    inserir(cod, nome, tell);
+                }
+            }
+    
+            System.out.println("Importação concluída com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Erro ao converter os dados do arquivo: " + e.getMessage());
+        }
     }
 
 }
