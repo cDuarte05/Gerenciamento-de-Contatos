@@ -16,5 +16,7 @@ public class No {
 
 	public No (String nome) {
 		this.nome = nome;
+		this.esquerdo = null;
+		this.direito = null;
 	}
 }
