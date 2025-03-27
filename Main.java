@@ -19,7 +19,7 @@ public class Main {
 			System.out.println("Opção 3: Listar todos os contatos em ordem alfabética");
 			System.out.println("Opção 4: Remover um contato por código");
 			System.out.println("Opção 5: Importar CSV");
-			System.out.println("Opção 6: Exibir estatísticas do sistema: ");
+			System.out.println("Opção 6: Exibir estatísticas do sistema ");
 			System.out.println("Opção 7: Sair");
 			try {
 				opc = sc.nextInt();		
@@ -88,12 +88,19 @@ public class Main {
 						break;
 					}
 					buscado = contatos.buscar(cod);
-					nomes.removerTexto(buscado.nome);
-					contatos.remover(cod);
+					if (buscado == null) {
+						System.out.println("Código não presente na árvore de contatos.");
+					} else {
+						System.out.println("Contato Removido:");
+						System.out.println("Nome: " + buscado.nome);
+						System.out.println("Telefone: " + buscado.tell);
+						System.out.println("Código: " + buscado.cod);
+						nomes.removerTexto(buscado.nome);
+						contatos.remover(cod);
+					}
 				break;
 				case 5:
-				contatos.importarCSV("contatos.csv");
-				nomes.importarCSVNomes("contatos.csv");
+				contatos.importarCSV("dados.csv", nomes);
 				break;
 				case 6:
 					System.out.println("Estátisticas da árvore");
@@ -104,7 +111,8 @@ public class Main {
 					numeroNos = contatos.contarNos();
 					alturaArvore = contatos.calcularAlturaArvore();
 					quantidadeFolhas = contatos.contarFolhas();
-					System.out.println("Nuúmero de nós: " + numeroNos);
+					System.out.println("Número de nós: " + numeroNos);
+					System.out.println("Número de nomes: " + nomes.contarNos()); // Temporário
 					System.out.println("Altura da árvore: "+ alturaArvore);
 					System.out.println("Quantidade de folhas: "+ quantidadeFolhas);
 				break;
