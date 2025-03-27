@@ -1,10 +1,10 @@
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 public class ArvoreBinariaBusca {
-
-    private static final int ESPACO_IMPRESSAO = 4;
     No raiz;
 
     public ArvoreBinariaBusca() {
@@ -388,30 +388,25 @@ public class ArvoreBinariaBusca {
         if (estaVazia()) {
             System.out.println("Árvore vazia");
         } else {
-            imprimirArvoreTextoRecursivo(raiz, 0);
+            imprimirArvoreTextoRecursivo(raiz);
         }
     }
 
-    private void imprimirArvoreTextoRecursivo(No atual, int espaco) {
+    private void imprimirArvoreTextoRecursivo(No atual) {
         if (atual == null) {
             return;
         }
-        espaco += ESPACO_IMPRESSAO;
-        imprimirArvoreTextoRecursivo(atual.direito, espaco);
-
-        System.out.print("\n");
-        for (int i = 4; i < espaco; i++) {
-            System.out.print(" ");
-        }
-        System.out.print(atual.cod + "\n");
-
-        imprimirArvoreTextoRecursivo(atual.esquerdo, espaco);
+        imprimirArvoreTextoRecursivo(atual.direito);
+        System.out.println(atual.cod + " - " + atual.nome + " - " + atual.tell);
+        imprimirArvoreTextoRecursivo(atual.esquerdo);
 
     }
 
     //CSV árvore contatos
-    public void importarCSV(String caminhoArquivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+    public void importarCSV(String caminhoArquivo,ArvoreBinariaBusca nomes) {
+        try  {
+            Reader reader = new InputStreamReader(new FileInputStream(caminhoArquivo), "UTF-8");
+            BufferedReader br = new BufferedReader(reader);
             String linha;
             br.readLine(); // Pula o cabeçalho do CSV
     
@@ -422,10 +417,12 @@ public class ArvoreBinariaBusca {
                     String nome = dados[1].trim();
                     long tell = Long.parseLong(dados[2].trim());
                     inserir(cod, nome, tell);
+                    nomes.inserirTexto(nome);
                 }
             }
     
             System.out.println("Importação concluída com sucesso!");
+            br.close();
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
         } catch (NumberFormatException e) {
@@ -433,27 +430,4 @@ public class ArvoreBinariaBusca {
         }
     }
 
-    //CSV arvore nomes
-    public void importarCSVNomes (String caminhoArquivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
-            String linha;
-            br.readLine(); // Pula o cabeçalho do CSV
-    
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(",");
-                if (dados.length == 3) {
-                    Integer.parseInt(dados[0].trim());
-                    String nome = dados[1].trim();
-                    Long.parseLong(dados[2].trim());
-                    inserirTexto(nome);
-                }
-            }
-    
-            System.out.println("Importação concluída com sucesso!");
-        } catch (IOException e) {
-            System.out.println("Erro ao ler o arquivo: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Erro ao converter os dados do arquivo: " + e.getMessage());
-        }
-    }
 }
